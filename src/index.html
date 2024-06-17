@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="./css/style.css" rel="stylesheet" type="text/css">
+    <title>Warthog Browser Node</title>
+</head>
+<body>
+	<div id="wrapper" class="flex column">
+		<div id="load"></div>
+		<div id="header" class="flex">
+			<img src="./img/main_logo.png" class="header__img-logo">
+			<span>BROWSER NODE</span>
+		</div>
+		<div class="flex row p_v_10px opacity_0"><img src="./img/main_logo.png" class="header__img-logo"></div>
+		<div id="content" class="flex column expand">
+			<div class="flex column content-block expanded expand">
+				<h3>Console</h3>
+				<textarea id="console"></textarea>
+			</div>
+			<div id="status" class="content-block text center red"></div>
+			<div id="chain-status" class="content-block">
+				<h3>Chain (<span id="length">0</span>): <span id="totalWork">0 h</span> &commat; <span id="difficulty">0 h</span> per block</h3>
+			</div>
+			<div class="flex content-block">
+				<div id="peers" class="w_50">
+					<h3>Peers (<span id="npeers">0</span>)</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>In</th>
+								<th>Type</th>
+								<th>Address</th>
+								<th>Since</th>
+							</tr>
+						</thead>
+						<tbody id='peersTable'>
+						</tbody>
+					</table>
+				</div>
+				<div id="mempool" class="w_50">
+					<h3>Mempool (<span id="nmempool">0</span>)</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>From</th>
+								<th>To</th>
+								<th>Amount</th>
+								<th>Fee</th>
+								<th>TxHash</th>
+							</tr>
+						</thead>
+						<tbody id='mempoolTable'>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="spinner" id='spinner'></div>
+			<!-- <div class="emscripten" id="status">Downloading...</div> -->
+			<progress value="0" max="100" id="progress" hidden=1></progress>
+
+			<!-- <div class="shadow px-4 my-4 sm:px-6 lg:px-8">
+				<p class="my-2">Console</p>
+			<textarea class="min-w-full font-mono bg-black leading-none text-slate-50 shadow" id="output" rows="8"></textarea> -->
+			<!-- </div>
+			<div class="shadow px-4 my-4 sm:px-6 lg:px-8">
+				<p class="my-2" ></p>
+			</div> -->
+			<!-- <div class="shadow px-4 my-4 sm:px-6 lg:px-8">
+				<p class="my-2" ></p>
+				<table class="font-mono tracking-wide m-1 p-2">
+					<thead>
+						<tr>
+							<th>In</th>
+							<th>Type</th>
+							<th>Address</th>
+							<thp>Since</th>
+						</tr>
+					</thead>
+					<tbody id='peersTable'>
+					</tbody>
+				</table>
+			</div>
+			<div class="shadow px-4 my-4 sm:px-6 lg:px-8">
+				<p class="my-2">Mempool (<span id="nmempool">0</span>)</p>
+				<table class="font-mono tracking-wide m-1 p-2">
+					<thead>
+						<tr>
+							<th>From</th>
+							<th>To</th>
+							<th>Amount</th>
+							<thp>Fee</th>
+							<thp>TxHash</th>
+						</tr>
+					</thead>
+					<tbody id='mempoolTable'>
+					</tbody>
+				</table>
+			</div> -->
+
+		</div>
+		<div id="footer" class="flex">
+			<span class="text center">
+				Copyright © Warthog 2024 Website Design by re. Logo by BalkyBot.
+			</span>
+		</div>
+	</div>
+	
+	<script type="module" src="./js/main.js"></script>
+</body>
+</html>
