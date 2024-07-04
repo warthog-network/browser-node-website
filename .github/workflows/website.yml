@@ -49,6 +49,6 @@ jobs:
 
     steps:  
       - name: Move node artifacts to website
-      - run : cp -r Warthog/build/wasm/* website/out
+        run : cp -r Warthog/build/wasm/* website/out
 
     
