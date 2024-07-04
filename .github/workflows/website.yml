@@ -24,10 +24,10 @@ jobs:
 
       - name : upload artifact
         uses: actions/upload-artifact@v4
-          with:
-            name: website
-            path: out
-            
+        with:
+          name: website
+          path: out
+
   build-node:
   runs-on: ubuntu-latest
 
