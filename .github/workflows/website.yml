@@ -27,32 +27,30 @@ jobs:
           with:
             name: website
             path: out
-
-
+            
   build-node:
-    runs-on: ubuntu-latest
+  runs-on: ubuntu-latest
 
-    steps :
-      - uses: actions/checkout@v4 
-        with:
-          repository: 'warthog-network/Warthog'
-          ref: 'network_refactor'
-          
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: 'warthog-network/Warthog'
+        ref: 'network_refactor'
 
-      - name : Meson Test
-        run : DOCKER_BUILDKIT=1 docker build . --file dockerfiles/run_tests --progress plain
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
-      - name: Docker Build
-        run: DOCKER_BUILDKIT=1 docker build . -f dockerfiles/build_emscripten --output build
+    - name: Meson Test
+      run: DOCKER_BUILDKIT=1 docker build . --file dockerfiles/run_tests --progress plain
 
-      - name : upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: node
-          path: build/wasm/
+    - name: Docker Build
+      run: DOCKER_BUILDKIT=1 docker build . -f dockerfiles/build_emscripten --output build
+
+    - name: upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: node
+        path: build/wasm/
   
   merge-website-and-node:
     needs : [build, build-node]
