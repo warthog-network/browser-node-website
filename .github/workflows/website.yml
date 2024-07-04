@@ -22,4 +22,23 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run prod
+
+  build-node:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps :
+      - uses: actions/checkout@v4 
+        with:
+          repository: 'warthog-network/Warthog'
+          ref: 'network_refactor'
+      
+      - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+      - name : Meson Test
+          run : DOCKER_BUILDKIT=1 docker build . --file dockerfiles/run_tests --progress plain
+
+      - name: Docker Build
+          run: DOCKER_BUILDKIT=1 docker build . -f dockerfiles/build_emscripten --output build
     
