@@ -72,6 +72,9 @@ jobs:
         with:
           name: node  # Name of the second artifact to download
 
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name : unzip artifacts
         run: |
           unzip website.zip -d website
