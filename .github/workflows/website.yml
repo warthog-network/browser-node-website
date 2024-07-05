@@ -72,23 +72,22 @@ jobs:
         with:
           name: node  # Name of the second artifact to download
 
-      - name: Merge artifacts
+      - name : unzip artifacts
         run: |
-          mkdir merged-artifact  # Create a directory for the merged artifact
-          cp -r website/* merged-artifact/  # Copy the contents of 'website' into 'merged-artifact'
-          cp -r node/* merged-artifact/  # Copy the contents of 'node' into 'merged-artifact'
+          unzip website.zip -d website
+          unzip node.zip -d website/js
 
       - name: Upload merged artifact
         uses: actions/upload-artifact@v4
         with:
-          name: merged-artifact  # Name of the merged artifact
-          path: merged-artifact/  # Path to the directory containing the merged artifact
+          name: node-website  # Name of the merged artifact
+          path: website/  # Path to the directory containing the merged artifact
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: merget-artifact.zip
+          files: node-website.zip
       
 
       
