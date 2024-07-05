@@ -80,15 +80,11 @@ jobs:
       - name : mv node files
         run : mv node/* website/js/
 
-      - name: Upload merged artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-website  # Name of the merged artifact
-          path: website/  # Path to the directory containing the merged artifact
+      - name: Zip merged artifact
+        run: zip -r node-website.zip website/
 
       - name: Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: node-website.zip
       
