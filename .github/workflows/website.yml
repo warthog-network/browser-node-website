@@ -56,7 +56,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:  
-      - name: Move node artifacts to website
-        run : cp -r Warthog/build/wasm/* website/out
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+    - name : get package version
+        run: echo "::set-env name=PACKAGE_VERSION::$(cat package.json | jq -r .version)"
+
+      - name: Download artifact 'website'
+        uses: actions/download-artifact@v4
+        with:
+          name: website  # Name of the first artifact to download
+
+      - name: Download artifact 'node'
+        uses: actions/download-artifact@v4
+        with:
+          name: node  # Name of the second artifact to download
+
+      - name: Merge artifacts
+        run: |
+          mkdir merged-artifact  # Create a directory for the merged artifact
+          cp -r website/* merged-artifact/  # Copy the contents of 'website' into 'merged-artifact'
+          cp -r node/* merged-artifact/  # Copy the contents of 'node' into 'merged-artifact'
+
+      - name: Upload merged artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: merged-artifact  # Name of the merged artifact
+          path: merged-artifact/  # Path to the directory containing the merged artifact
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: merget-artifact.zip
+      
+
+      
 
     
