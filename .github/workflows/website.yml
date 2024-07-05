@@ -59,7 +59,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-    - name : get package version
+      - name : get package version
         run: echo "::set-env name=PACKAGE_VERSION::$(cat package.json | jq -r .version)"
 
       - name: Download artifact 'website'
