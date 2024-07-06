@@ -1,0 +1,98 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Update Website CI
+
+on:
+  push:
+    branches: [ "main" ]
+  repository_dispatch:
+    types: [update-website]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run prod
+
+      - name : upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: out
+
+  build-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'warthog-network/Warthog'
+          ref: 'network_refactor'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Meson Test
+        run: DOCKER_BUILDKIT=1 docker build . --file dockerfiles/run_tests --progress plain
+
+      - name: Docker Build
+        run: DOCKER_BUILDKIT=1 docker build . -f dockerfiles/build_emscripten --output build
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node
+          path: build/wasm/
+  
+  merge-website-and-node:
+    needs : [build, build-node]
+    runs-on: ubuntu-latest
+
+    steps:  
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name : get package version
+        run: echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
+
+      - name: Download artifact 'website'
+        uses: actions/download-artifact@v4
+        with:
+          name: website  # Name of the first artifact to download
+          path : website
+
+      - name: Download artifact 'node'
+        uses: actions/download-artifact@v4
+        with:
+          name: node  # Name of the second artifact to download
+          path : node
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name : mv node files
+        run : mv node/* website/src/js/
+
+      - name: Zip merged artifact
+        run: |
+          cd website
+          zip -r ../node-website.zip *
+        
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name : ${{ env.PACKAGE_VERSION }}
+          files: node-website.zip
+      
+
+      
+
+    

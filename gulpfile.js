@@ -27,11 +27,11 @@ const SRC_FONTS = 'src/fonts/**/*';
 const SRC_JS_EXTERNAL = 'src/js-external/**/*.{js,mjs,map,wasm}';
 const SRC_JS = 'src/js/main.js';
 
-const DST_HTML = 'out/';
-const DST_STYLE = 'out/css/';
-const DST_IMG = 'out/img/';
-const DST_FONTS = 'out/fonts/';
-const DST_JS = 'out/js/';
+const DST_HTML = 'out/src/';
+const DST_STYLE = 'out/src/css/';
+const DST_IMG = 'out/src/img/';
+const DST_FONTS = 'out/src/fonts/';
+const DST_JS = 'out/src/js/';
 
 const WATCH_PATTERN_HTML = 'src/**/*.html';
 const WATCH_PATTERN_STYLE = 'src/style/**/*.scss';
