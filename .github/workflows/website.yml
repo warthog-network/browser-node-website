@@ -81,7 +81,10 @@ jobs:
         run : mv node/* website/src/js/
 
       - name: Zip merged artifact
-        run: zip -r node-website.zip website/*
+        run: |
+          cd website
+          zip -r ../node-website.zip *
+        
 
       - name: Release
         uses: softprops/action-gh-release@v2
