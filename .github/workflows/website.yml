@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: website
-          path: out
+          path: out/*
 
   build-node:
     runs-on: ubuntu-latest
