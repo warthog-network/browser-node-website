@@ -83,7 +83,7 @@ jobs:
       - name: Zip merged artifact
         run: |
           cd website
-          zip -r ../node-website.zip *
+          zip -r ../node-website.zip ./*
         
 
       - name: Release
