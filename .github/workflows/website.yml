@@ -103,7 +103,7 @@ jobs:
           username: dokku
           key: ${{ secrets.DOKKU_KEY }}
           request_pty: true
-          script: 'git:from-archive --archive-type zip browser-node https://github.com/warthog-network/browser-node-website/releases/download/1.0.2/node-website.zip'
+          script: 'git:from-archive --archive-type zip browser-node https://github.com/warthog-network/browser-node-website/releases/download/${{ env.PACKAGE_VERSION }}/node-website.zip'
 
       
 
