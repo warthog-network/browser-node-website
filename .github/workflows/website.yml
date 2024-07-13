@@ -91,11 +91,6 @@ jobs:
           tag_name : ${{ env.PACKAGE_VERSION }}
           files: node-website.zip
 
-  deploy:
-    needs: [merge-website-and-node]
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Push to dokku
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -104,6 +99,7 @@ jobs:
           key: ${{ secrets.DOKKU_KEY }}
           request_pty: true
           script: 'git:from-archive --archive-type zip browser-node https://github.com/warthog-network/browser-node-website/releases/download/${{ env.PACKAGE_VERSION }}/node-website.zip'
+      
 
       
 
