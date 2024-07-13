@@ -75,7 +75,7 @@ jobs:
           path : node
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls -R -a
 
       - name : mv node files
         run : mv node/* website/src/js/
@@ -83,7 +83,7 @@ jobs:
       - name: Zip merged artifact
         run: |
           cd website
-          zip -r ../node-website.zip *
+          zip -r ../node-website.zip . .[^.]* *
         
 
       - name: Release
