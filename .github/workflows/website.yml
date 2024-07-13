@@ -85,12 +85,22 @@ jobs:
           cd website
           zip -r ../node-website.zip . .[^.]* *
         
-
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name : ${{ env.PACKAGE_VERSION }}
           files: node-website.zip
+
+      - name: Push to dokku
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: dokku
+          key: ${{ secrets.DOKKU_KEY }}
+          request_pty: true
+          script: 'git:from-archive --archive-type zip browser-node https://github.com/warthog-network/browser-node-website/releases/download/${{ env.PACKAGE_VERSION }}/node-website.zip'
+      
+
       
 
       
