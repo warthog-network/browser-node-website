@@ -75,7 +75,7 @@ jobs:
           path : node
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls -R -a
 
       - name : mv node files
         run : mv node/* website/src/js/
