@@ -6,8 +6,7 @@ name: Update Website CI
 on:
   push:
     branches: [ "main", "master" ]
-  repository_dispatch:
-    types: [update-website]
+  workflow_dispatch :
 
 jobs:
   build:
