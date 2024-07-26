@@ -87,7 +87,7 @@ const onMempoolErase = event =>
 	}
 };
 
-const preRun = module => module.ENV.WS_PEERS = 'world';
+const preRun = module => module.ENV.WS_PEERS = 'wss://node1.warthog.network/ws;wss://node2.warthog.network/ws';
 
 const print = (...texts) =>
 {
